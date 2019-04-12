@@ -253,7 +253,7 @@
     <div class="row">
         <div class="large-12 columns">
             <div id="container">
-                <h2>Jeffco Public Schools</h2>
+                <h2>Denver Public Schools</h2>
                  <!-- <div class="row"> -->
                     <!-- <div class="large-9 large-centered medium-8 medium-centered small-12 columns"> -->
                         <p><em>Zoom map and click circles for details &bull; circle size represents number of incidents &bull; to see individual incidents, go to the table at the bottom of the page</em></p>
@@ -284,7 +284,7 @@
             <span style="border-top: 3px solid #ccc">Single-family home</span> &bull; <span style="border-top: 3px solid #4f9da6">Duplex</span> &bull; <span style="border-top: 3px solid #ffad5a">Townhomes</span> &bull; <span style="border-top: 3px solid #ff5959" id="layerApartments">Apartments/condos</span> &bull; <span style="border-top: 3px solid #1a0841">Mixed-use w/residential</span>
         </div> -->
                 <div id="map"></div>
-                <p class="source">By Kevin Hamm, The Denver Post &bull; Source: Jeffco Public Schools</p>
+                <p class="source">By Kevin Hamm, The Denver Post &bull; Source: Denver Public Schools</p>
                 <!-- <p class="note">Note: Some map markers may overlap; locations are approximate</p> -->
             </div> <!-- End "container" -->
         </div>
@@ -301,7 +301,7 @@
             <p class="note">"Other" schools include K-8, K-12, etc.</p>
         </div>
     </div>
-    <script src="jeffco-data.js"></script>
+    <script src="denver-data.js"></script>
     <script>
     // From https://gis.stackexchange.com/questions/307985/multiple-on-the-fly-filtering-based-on-markers-features-on-leaflet
 
@@ -315,7 +315,7 @@
 
     var map = L.map('map', {
         center: [39.7392, -104.9903],
-        zoom: 10,
+        zoom: 11,
         //minZoom: 11,
         preferCanvas: true
     }).addLayer(cartoTiles);
@@ -352,7 +352,6 @@
 
             var tooltipText = '<h4 class="neighborhood">' + feature.properties.schoolName + '</h4><p class="address">' + feature.properties.schoolAddress + ', ' + feature.properties.schoolCity + '</p><hr><p class="popup-text">' + feature.properties.incidentType + '(s): <strong>' + feature.properties.incidentCount + '</strong></p><p class="note">For 2017-18 and 2018-19 school years</p>';
 
-            console.log(jsonData);
             if (feature.properties.incidentType == 'Lockdown') {
                 return L.circleMarker(latlng, lockdownCircle).bindPopup(tooltipText)
             } else {
@@ -403,9 +402,9 @@
         data: {
             x: 'x',
             columns: [
-                ['x', '2018-19', '2017-18'],
-                ['Lockdown',20,17],
-                ['Lockout',79,96]
+                ['x', '2017-18', '2018-19'],
+                ['Lockdown', 13, 9],
+                ['Lockout', 210, 78]
 
             ],
             type: 'bar',
@@ -446,11 +445,10 @@
         },
         data: {
             columns: [
-                ['Elementary', 105],
-                ['Middle', 24],
-                ['High', 41],
-                ['Other', 38],
-                ['Preschool', 6]
+                ['Elementary', 134],
+                ['Middle', 34],
+                ['High', 99],
+                ['Other', 43]
 
             ],
             type: 'donut',
