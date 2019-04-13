@@ -246,6 +246,30 @@
     a.leaflet-control-layers-toggle {
         background-color: red;
     }
+
+    div.legend-circle-small {
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        background-color: rgba(0,0,255,.1);
+        margin-top: 0px;
+    }
+
+    div.legend-circle-large {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        background-color: rgba(0,0,255,.1);
+        margin-top: -13px;
+    }
+
+    span.circle-number {
+        font-size: .7rem;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+        color: #737373;
+        display: inline-block;
+    }
     </style>
 </head>
 
@@ -253,38 +277,35 @@
     <div class="row">
         <div class="large-12 columns">
             <div id="container">
-                <h2>Douglas County Public Schools</h2>
-                 <!-- <div class="row"> -->
-                    <!-- <div class="large-9 large-centered medium-8 medium-centered small-12 columns"> -->
-                        <p><em>Zoom map and click circles for details &bull; circle size represents number of incidents &bull; to see individual incidents, go to the table at the bottom of the page</em></p>
-                    <!-- </div> -->
-                <!-- </div> -->
+                <h2>Douglas County School District</h2>
+                <p>Douglas County School District provided lockdown and lockout data for <strong>5 years</strong>, 2014-15 through 2018-19. There were <strong>5 lockdowns</strong> and <strong>126 lockouts</strong>. The highest number of incidents happened at <strong>Sand Creek Elementary School &mdash; 9</strong>.</p>
+                <p class="instructions">Zoom map and click circles for details &bull; circle size represents number of incidents &bull; to see individual incidents, go to the table at the bottom of the page</p>
                 <fieldset class="fieldset">
                     <legend><strong><em>Use checkboxes to show/hide</em></strong></legend>
                     <div class="legend-container">
                         <div class="inputs" id="incidents">
                             <div class="legend-item">
-                                <input type="checkbox" class="incident-type" id="lockout-box" name="lockout-box" value="Lockout" checked="true">
-                                <label for="lockout-box"><span style="border-top: 3px solid rgba(0,0,255,.5)">Lockout</span></label>
+                                <input type="checkbox" class="incident-type" id="lockdown-box" name="lockdown-box" value="Lockdown" checked="true">
+                                <label for="lockdown-box"><span style="border-top: 3px solid  rgba(255,0,0,.5)">Lockdown</span> (5)</label>
                             </div>
                             <div class="legend-item">
-                                <input type="checkbox" class="incident-type" id="lockdown-box" name="lockdown-box" value="Lockdown" checked="true">
-                                <label for="lockdown-box"><span style="border-top: 3px solid  rgba(255,0,0,.5)">Lockdown</span></label>
+                                <input type="checkbox" class="incident-type" id="lockout-box" name="lockout-box" value="Lockout" checked="true">
+                                <label for="lockout-box"><span style="border-top: 3px solid rgba(0,0,255,.5)">Lockout</span> (126)</label>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-circle-small"><span class="circle-number" style="margin:0 0 0 9px">1</span></div>
+                            </div>
+                            <div class="legend-item">
+                                <span style="margin: 0 5px 0 5px">&xrarr;</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-circle-large"><span class="circle-number" style="margin:17px 0 0 18px">9</span></div>
                             </div>
                         </div>
-                        <!-- <div class="inputs" id="years">
-                    <div class="legend-item"><input type="checkbox" class="school-year" id="2017-18" name="2017-18" value="2017-18" checked="true">
-                        <label for="2017-18">2017-18</label></div>
-                    <div class="legend-item"><input type="checkbox" class="school-year" id="2018-19" name="2018-19" value="2018-19" checked="true">
-                        <label for="2018-19">2018-19</label></div>
-                </div> -->
                     </div>
                 </fieldset>
-                <!-- <div style="margin-bottom:15px;" class="legend-text">
-            <span style="border-top: 3px solid #ccc">Single-family home</span> &bull; <span style="border-top: 3px solid #4f9da6">Duplex</span> &bull; <span style="border-top: 3px solid #ffad5a">Townhomes</span> &bull; <span style="border-top: 3px solid #ff5959" id="layerApartments">Apartments/condos</span> &bull; <span style="border-top: 3px solid #1a0841">Mixed-use w/residential</span>
-        </div> -->
                 <div id="map"></div>
-                <p class="source">By Kevin Hamm, The Denver Post &bull; Source: Denver Public Schools</p>
+                <p class="source">By Kevin Hamm, The Denver Post &bull; Source: Douglas County School District</p>
                 <!-- <p class="note">Note: Some map markers may overlap; locations are approximate</p> -->
             </div> <!-- End "container" -->
         </div>
@@ -329,7 +350,7 @@
         pointToLayer: function(feature, latlng) {
             var circleRadius;
             if (feature.properties.incidentCount > 1) {
-                circleRadius = (feature.properties.incidentCount * 2.5)
+                circleRadius = (Math.sqrt(feature.properties.incidentCount) * 6.5)
             } else {
                 circleRadius = 5
             };
