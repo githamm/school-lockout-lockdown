@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Colorado Lobbyist Database 2018 | The Denver Post</title>
+    <title>Colorado School Lockout and Lockdown Database | The Denver Post</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -22,10 +22,17 @@
     <script src="//cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script src="//cdn.datatables.net/responsive/2.2.1/js/responsive.foundation.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.2/jquery.dataTables.yadcf.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
     <style>
     body {
         background-color: #fafafa;
         font-family: 'Roboto', sans-serif;
+    }
+
+    #main-container {
+        width: 700px;
+        margin: 0 auto;
     }
 
     .table-title {
@@ -44,12 +51,12 @@
         font-size: .85rem;
     }
 
-    #lobbyists-table-container {
+    #lockdowns-table-container {
         margin-top: 10px;
         padding: 10px;
     }
 
-    #lobbyists-table {
+    #lockdowns-table {
         font-size: .85rem;
         font-family: 'Roboto', sans-serif;
     }
@@ -93,68 +100,78 @@
 </head>
 
 <body>
-    <div id="lobbyists-table-container">
-        <div class="row">
-            <div class="large-12 columns">
-                <h2 class="table-title">Colorado Lobbyist Database</h2>
-                <p class="body-text">Colorado lobbyists reported more than $33 million in gross revenue from their clients and employers in 2018, according to state records compiled and analyzed by The Denver Post. In this exclusive database, you can find which organizations hired lobbyists and how much lobbyists reported being paid. <em>Note: Colorado lobbying records can be incomplete, in part because the data is self-reported and there is little standardization. Have a question about the data? Email <a href="mailto:ngarcia@denverpost.com">ngarcia@denverpost.com</a>. <strong>Source: Colorado Secretary of State</strong></em></p>
-                <p class="instructions-text">Use dropdown menus to filter table; click column headers to sort</p>
-            </div>
-        </div>
-        <div id="filters">
+    <div id="main-container">
+        <div id="lockdowns-table-container">
             <div class="row">
-                <div class="large-4 medium-4 small-12 columns">
-                    <span id="lobbyist-filter" style="font-weight: bold;"></span>
-                </div>
-                <div class="large-4 medium-4 small-12 columns">
-                    <span id="client-filter" style="font-weight: bold;"></span>
-                </div>
-                <div class="large-4 medium-4 small-12 columns">
-                    <span id="industry-filter" style="font-weight: bold;"></span>
+                <div class="large-12 columns">
+                    <h2 class="table-title">Colorado School Lockout and Lockdown Database</h2>
+                    <p class="body-text">Chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter and chatter.</p>
+                    <p class="instructions-text">Use dropdown menus to filter table; click column headers to sort</p>
                 </div>
             </div>
-        </div>
-        <!-- <div class="row">
+            <div id="filters">
+                <div class="row">
+                    <div class="large-3 medium-3 small-12 columns">
+                        <span id="district-filter" style="font-weight: bold;"></span>
+                    </div>
+                    <div class="large-3 medium-3 small-12 columns">
+                        <span id="schooltype-filter" style="font-weight: bold;"></span>
+                    </div>
+                    <div class="large-3 medium-3 small-12 columns">
+                        <span id="category-filter" style="font-weight: bold;"></span>
+                    </div>
+                    <div class="large-3 medium-3 small-12 columns">
+                        <span id="year-filter" style="font-weight: bold;"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
             <div class="large-6 medium-6 small-12 left columns">
                 <p class="filter-text">Filter by amount</p>
                 <span id="income-filter" style="font-weight: bold;"></span>
             </div>
         </div> -->
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <table id="lobbyists-table" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th data-priority="1">Lobbyist/firm</th>
-                        <th data-priority="3">Client</th>
-                        <th data-priority="2">Income reported</th>
-                        <th data-priority="4">Industry</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                </tfoot>
-                <tbody>
-                </tbody>
-            </table>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <table id="lockdown-table" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th data-priority="1">District</th>
+                            <th data-priority="2">School</th>
+                            <th data-priority="3">Date</th>
+                            <th data-priority="4">Category</th>
+                            <th data-priority="5">School type</th>
+                            <th>School year</th>
+                            <th data-priority="6">City</th>
+                            <th class="none">"Other" reason</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                    </tfoot>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <script>
-    var dataFile = 'lobbyists-2.json'
+    var dataFile = 'table-data.json'
 
     $(document).ready(function() {
         function disableDependentFilter(level, inuse) {
             if (level < 4) {
                 filter = $('#yadcf-filter--example-' + level);
-                yadcf.exResetFilters(lobbyistsTable, [level]);
+                yadcf.exResetFilters(lockdownTable, [level]);
                 filter.prop('disabled', !inuse);
 
                 disableDependentFilter(level + 1, false);
             }
         }
 
-        var lobbyistsTable = $('#lobbyists-table').DataTable({
+        var lockdownTable = $('#lockdown-table').DataTable({
             ajax: {
                 'url': dataFile,
                 'dataSrc': ''
@@ -167,17 +184,22 @@
             },
             dom: '<if<t>lp>',
             columnDefs: [{
-                className: 'control',
-                orderable: false,
-                targets: 0
-            }],
+                    className: 'control',
+                    orderable: false,
+                    targets: 0
+                },
+                {
+                    type: 'date',
+                    targets: 3
+                }
+            ],
             order: [
                 [1, 'asc']
             ],
             columns: [
                 { data: 'button' },
                 {
-                    data: 'lobbyist-firm-name',
+                    data: 'district',
                     // render: function(data, type, row) {
                     //     if (data == 'DEM') {
                     //         return '<div class="dem">&nbsp;</div>'
@@ -186,48 +208,69 @@
                     //     }
                     // }
                 },
-                { data: 'client-name' },
+                { data: 'location' },
+                // {
+                //     data: 'income',
+                //     render: function(data, type, row) {
+                //         //console.log(row.income);
+                //         var incomeNumber = (row.income).replace(/[^0-9]+/g, '');
+                //         return '$' + parseInt(incomeNumber).toLocaleString();
+                //     }
+                //     //render: $.fn.dataTable.render.number(',', '.', 0, '$')
+                //     // render: function(data, type, row) {
+                //     //     if(row.income == '') {
+                //     //         return 0
+                //     //     } else {
+                //     //         return row.income
+                //     //     }
+                //     // }
+                // },
                 {
-                    data: 'income',
-                    render: function(data, type, row) {
-                        //console.log(row.income);
-                        var incomeNumber = (row.income).replace(/[^0-9]+/g, '');
-                        return '$' + parseInt(incomeNumber).toLocaleString();
-                    }
-                    //render: $.fn.dataTable.render.number(',', '.', 0, '$')
-                    // render: function(data, type, row) {
-                    //     if(row.income == '') {
-                    //         return 0
-                    //     } else {
-                    //         return row.income
-                    //     }
-                    // }
+                    data: 'date'
+                    //render: $.fn.dataTable.moment("MM/DD/YY")
                 },
                 {
-                    data: 'industry'
+                    data: 'category'
+                },
+                {
+                    data: 'schoolType'
+                },
+                {
+                    data: 'year',
+                    visible: false
+                },
+                {
+                    data: 'city'
+                },
+                {
+                    data: 'categorySub'
+                },
+                {
+                    data: 'address',
+                    visible: false
                 }
             ],
 
             initComplete: function() {
-                yadcf.init(lobbyistsTable, [{
+                yadcf.init(lockdownTable, [{
                         column_number: 1,
-                        filter_container_id: 'lobbyist-filter',
-                        filter_default_label: 'Filter by lobbyist/firm'
+                        filter_container_id: 'district-filter',
+                        filter_default_label: 'Filter by district'
                     }, {
-                        column_number: 2,
-                        filter_container_id: 'client-filter',
-                        filter_default_label: 'Filter by client'
-                    },
-                    // {
-                    //     column_number: 3,
-                    //     filter_container_id: 'income-filter',
-                    //     //column_data_type: 'rendered_html',
-                    //     filter_type: 'range_number'
-                    // },
-                    {
                         column_number: 4,
-                        filter_container_id: 'industry-filter',
-                        filter_default_label: 'Filter by industry',
+                        filter_container_id: 'category-filter',
+                        filter_default_label: 'Filter by category'
+                    },
+                    {
+                        column_number: 5,
+                        filter_container_id: 'schooltype-filter',
+                        filter_default_label: 'Filter by type',
+                        //column_data_type: 'rendered_html'
+                    },
+                    {
+                        column_number: 6,
+                        filter_container_id: 'year-filter',
+                        filter_default_label: 'Filter by year',
                         //column_data_type: 'rendered_html'
                     }
                 ], {
