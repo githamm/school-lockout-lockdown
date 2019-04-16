@@ -372,7 +372,7 @@
                 fillOpacity: .5
             };
 
-            var tooltipText = '<h4 class="neighborhood">' + feature.properties.schoolName + '</h4><p class="address">' + feature.properties.schoolAddress + ', ' + feature.properties.schoolCity + '</p><hr><p class="popup-text">' + feature.properties.incidentType + '(s): <strong>' + feature.properties.incidentCount + '</strong></p><p class="note">For 2017-18 and 2018-19 school years</p>';
+            var tooltipText = '<h4 class="neighborhood">' + feature.properties.schoolName + '</h4><p class="address">' + feature.properties.schoolAddress + ', ' + feature.properties.schoolCity + '</p><hr><p class="popup-text">' + feature.properties.incidentType + '(s): <strong>' + feature.properties.incidentCount + '</strong></p><p class="note">For 2016-17, 2017-18 and 2018-19 school years</p>';
 
             if (feature.properties.incidentType == 'Lockdown') {
                 return L.circleMarker(latlng, lockdownCircle).bindPopup(tooltipText)

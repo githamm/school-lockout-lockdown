@@ -10950,8 +10950,8 @@
     "category": "Lockout",
     "categorySub": "",
     "date": "11/13/17",
-    "schoolType": "",
-    "location": "",
+    "schoolType": "K-8",
+    "location": "Cesar Chavez Academy",
     "address": "3752 Tennyson St",
     "city": "Denver"
 },
@@ -11586,7 +11586,7 @@
     "category": "Lockout",
     "categorySub": "",
     "date": "9/26/18",
-    "schoolType": "",
+    "schoolType": "High",
     "location": "Community Prep Charter",
     "address": "332 E. Willamette Ave.",
     "city": "Colorado Springs"
@@ -12450,8 +12450,8 @@
     "category": "Lockout",
     "categorySub": "",
     "date": "4/17/18",
-    "schoolType": "",
-    "location": "",
+    "schoolType": "Elementary",
+    "location": "Barrett Elementary/Venture Prep High",
     "address": "2900 Richard Allen Ct",
     "city": "Denver"
 },
@@ -12462,8 +12462,8 @@
     "category": "Lockout",
     "categorySub": "",
     "date": "1/25/18",
-    "schoolType": "",
-    "location": "",
+    "schoolType": "Elementary",
+    "location": "Barrett Elementary/Venture Prep High",
     "address": "2900 Richard Allen Ct",
     "city": "Denver"
 },
@@ -12474,8 +12474,8 @@
     "category": "Lockout",
     "categorySub": "",
     "date": "11/16/17",
-    "schoolType": "",
-    "location": "",
+    "schoolType": "Elementary",
+    "location": "Barrett Elementary/Venture Prep High",
     "address": "2900 Richard Allen Ct",
     "city": "Denver"
 },
@@ -12486,8 +12486,8 @@
     "category": "Lockout",
     "categorySub": "",
     "date": "7/18/17",
-    "schoolType": "",
-    "location": "",
+    "schoolType": "Elementary",
+    "location": "Barrett Elementary/Venture Prep High",
     "address": "2900 Richard Allen Ct",
     "city": "Denver"
 },
@@ -14442,7 +14442,7 @@
     "category": "Lockout",
     "categorySub": "",
     "date": "1/25/19",
-    "schoolType": "High",
+    "schoolType": "Middle",
     "location": "Sproul Junior High",
     "address": "235 Sumac Drive",
     "city": "Colorado Springs"
@@ -14454,7 +14454,7 @@
     "category": "Lockout",
     "categorySub": "",
     "date": "8/20/15",
-    "schoolType": "High",
+    "schoolType": "Middle",
     "location": "Sproul Junior High",
     "address": "235 Sumac Drive",
     "city": "Colorado Springs"
@@ -17622,8 +17622,8 @@
     "category": "Lockout",
     "categorySub": "",
     "date": "6/5/18",
-    "schoolType": "",
-    "location": "",
+    "schoolType": "Other",
+    "location": "Extended Learning",
     "address": "1617 S Acoma St",
     "city": "Denver"
 },
@@ -25748,30 +25748,6 @@
     "date": "7/21/17",
     "schoolType": "Administration",
     "location": "Administration Building",
-    "address": "",
-    "city": "Colorado Springs"
-},
-{
-    "button": "",
-    "district": "Harrison",
-    "year": "2015-16",
-    "category": "Lockout",
-    "categorySub": "",
-    "date": "1/6/16",
-    "schoolType": "",
-    "location": "",
-    "address": "",
-    "city": "Colorado Springs"
-},
-{
-    "button": "",
-    "district": "Harrison",
-    "year": "2015-16",
-    "category": "Lockout",
-    "categorySub": "",
-    "date": "8/4/15",
-    "schoolType": "",
-    "location": "",
     "address": "",
     "city": "Colorado Springs"
 },
