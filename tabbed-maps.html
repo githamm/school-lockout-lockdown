@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denver Metro Area Schools Lockdowns and Lockouts Map | The Denver Post</title>
+    <link rel="shortcut icon" href="//extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.0/foundation.css" />
+    <link rel="stylesheet" href="//unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.css" />
+    <script src="//code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.0/foundation.min.js"></script>
+    <script src="//extras.denverpost.com/foundation/js/vendor/modernizr.js"></script>
+    <script src="//unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+    <script src="//extras.denverpost.com/app/homicide-report/js/leaflet-grouped-layer-control.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
+    <style>
+    @import url('//fonts.googleapis.com/css?family=Roboto');
+
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        background-color: #fafafa;
+        font-family: 'Roboto', sans-serif;
+        margin-top: 1%;
+    }
+
+    #container {
+        /*height: 600px;*/
+        /*width: 893px;
+        margin: 0 auto;*/
+    }
+
+    #map {
+        height: 600px;
+        width: 100%;
+        /*width: 893px;
+        height: 600px;
+        margin: 0 auto;*/
+        border: 2px solid silver;
+    }
+
+    .leaflet-popup-content-wrapper {
+        border-radius: 0;
+        background-color: #fafafa;
+        /*max-width: 200px;*/
+        line-height: 100%;
+    }
+
+    .leaflet-container {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .leaflet-popup-content {
+        font-size: 1.2em;
+        letter-spacing: .2px;
+    }
+
+    /*#content-container {
+        padding: 15px;
+    }*/
+    .legend-text {
+        text-transform: uppercase;
+        font-size: .9rem;
+        font-weight: bold;
+        color: #737373;
+        text-align: center;
+        margin-bottom: 3px;
+    }
+
+    .legend-container {
+        width: 100%;
+        clear: both;
+    }
+
+    .legend-item {
+        float: left;
+    }
+
+    .instructions {
+        text-align: center;
+        font-size: .9rem;
+        font-style: italic;
+        color: #ff5959;
+        opacity: .8;
+    }
+
+    #years {
+        display: inline-block;
+    }
+
+    h2 {
+        font-family: 'Roboto', sans-serif;
+        font-size: 2em;
+        font-weight: 700;
+        letter-spacing: 0px;
+        line-height: 100%
+    }
+
+    h3.chart-title {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .neighborhood {
+        font-size: 1.3em;
+        font-weight: 700;
+        margin-bottom: -16px;
+        line-height: 22px;
+    }
+
+    .address {
+        font-style: italic;
+        color: rgba(0, 0, 0, .8);
+    }
+
+    .popup-text {
+        margin-bottom: -12px !important;
+        color: rgba(0, 0, 0, .8);
+    }
+
+    .popup-header {
+        font-weight: 700;
+        font-size: 1.1em;
+        /*letter-spacing: .5px;*/
+        /*text-transform: uppercase;*/
+        color: #000;
+        margin-bottom: 0;
+    }
+
+    hr {
+        margin: -12px 0 -8px 0;
+    }
+
+    .note {
+        font-size: .85em;
+        font-style: italic;
+        color: #808080;
+    }
+
+    .source {
+        font-size: .9em;
+        font-style: italic;
+        text-align: right;
+    }
+
+    /*.legend {
+        width: 60px;
+        height: 30px;
+        opacity: .6;
+        float: left;
+    }*/
+
+    label,
+    .legend-text {
+        font-size: .7em;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 7px;
+        letter-spacing: 1px;
+        line-height: 22px;
+        text-transform: uppercase;
+        color: #737373;
+    }
+
+    .fieldset {
+        padding: .75rem;
+    }
+
+    input.leaflet-control-layers-selector {
+        margin: 0;
+    }
+
+    /*label {
+        line-height: 1.45;
+    }*/
+
+    .icon-2018 {
+        border-radius: 50%;
+        border: 2px solid rgba(0, 0, 0, .5);
+        background: #ca0020;
+    }
+
+    .icon-2017 {
+        border-radius: 50%;
+        border: 2px solid rgba(0, 0, 0, .5);
+        background: #f4a582;
+    }
+
+    .icon-2016 {
+        border-radius: 50%;
+        border: 2px solid rgba(0, 0, 0, .5);
+        background: #f7f7f7;
+    }
+
+    .icon-2015 {
+        border-radius: 50%;
+        border: 2px solid rgba(0, 0, 0, .5);
+        background: #92c5de;
+    }
+
+    .icon-2014 {
+        border-radius: 50%;
+        border: 2px solid rgba(0, 0, 0, .5);
+        background: #0571b0;
+    }
+
+    .selector-2018,
+    .selector-2017,
+    .selector-2016,
+    .selector-2015,
+    .selector-2014 {
+        height: 12px;
+        width: 12px;
+        display: inline-block;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, .5);
+        margin: 0 0 0 3px;
+    }
+
+    .selector-2018 {
+        background: #ca0020;
+    }
+
+    .selector-2017 {
+        background: #f4a582;
+    }
+
+    .selector-2016 {
+        background: #f7f7f7;
+    }
+
+    .selector-2015 {
+        background: #92c5de;
+    }
+
+    .selector-2014 {
+        background: #0571b0;
+    }
+
+    a.leaflet-control-layers-toggle {
+        background-color: red;
+    }
+
+    div.legend-circle-small {
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 255, .1);
+        margin-top: 0px;
+    }
+
+    div.legend-circle-large {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 255, .1);
+        margin-top: -13px;
+    }
+
+    span.circle-number {
+        font-size: .7rem;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+        color: #737373;
+        display: inline-block;
+    }
+
+    iframe {
+        width: 100%;
+        height: 900px;
+        border: none;
+        /*overflow-y: auto;*/
+
+    }
+
+    .tabs-content,
+    .tabs {
+        background-color: #fafafa;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="content">
+                <div>
+                    <ul class="tabs" data-tabs id="example-tabs">
+                        <li class="tabs-title is-active">
+                            <a aria-selected="true" href="#panel1">Denver</a>
+                        </li>
+                        <li class="tabs-title">
+                            <a href="#panel2">Jeffco</a>
+                        </li>
+                        <li class="tabs-title">
+                            <a href="#panel3">Douglas</a>
+                        </li>
+                        <li class="tabs-title">
+                            <a href="#panel4">Cherry Creek</a>
+                        </li>
+                        <li class="tabs-title">
+                            <a href="#panel5">Aurora</a>
+                        </li>
+                        <li class="tabs-title">
+                            <a href="#panel6">Adams 12</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tabs-content" data-tabs-content="example-tabs">
+                    <div class="tabs-panel is-active" id="panel1">
+                        <iframe src="http://extras.denverpost.com/projects/2019/school-lockdowns/denver/denver-map.html" sc></iframe>
+                    </div>
+                    <div class="tabs-panel" id="panel2">
+                        <iframe src="http://extras.denverpost.com/projects/2019/school-lockdowns/jeffco/jeffco-map.html"></iframe>
+                    </div>
+                    <div class="tabs-panel" id="panel3">
+                        <iframe src="http://extras.denverpost.com/projects/2019/school-lockdowns/douglas/douglas-map.html"></iframe>
+                    </div>
+                    <div class="tabs-panel" id="panel4">
+                        <iframe src="http://extras.denverpost.com/projects/2019/school-lockdowns/cherry-creek/cherry-creek-map.html"></iframe>
+                    </div>
+                    <div class="tabs-panel" id="panel5">
+                        <iframe src="http://extras.denverpost.com/projects/2019/school-lockdowns/aurora/aurora-map.html"></iframe>
+                    </div>
+                    <div class="tabs-panel" id="panel6">
+                        <iframe src="http://extras.denverpost.com/projects/2019/school-lockdowns/adams-12/adams-12-map.html"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        /* 
+    See this CodePen blog post for more info:
+    https://codepen.io/rogerpence/post/programming-foundation-6-s-tab-component
+*/
+
+        $(function() {
+            // Wire up change vent for each tab. 
+            $('#example-tabs').on('change.zf.tabs', function() {
+                // The debugger statement is used to establish 
+                // a JavaScript breakpoint in browser dev tools.
+                // debugger;
+                // if ($('#panel1:visible').length) {
+                //     console.log('Tab 1 panel shown.');
+                // }
+                // if ($('#panel2:visible').length) {
+                //     console.log('Tab 2 panel shown.');
+                // }
+            });
+
+            // Initialize the Foundation framework.
+            $(document).foundation();
+            // Ensure change event fires for default active tab. 
+            // If you comment this line out, the change event 
+            // isn't called for the initally displayed tab.
+            $('#example-tabs').foundation('selectTab', 'panel1');
+        });
+        </script>
+</body>
+
+</html>

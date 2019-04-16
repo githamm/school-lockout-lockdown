@@ -314,11 +314,11 @@
     <div class="row">
         <div class="large-6 medium-6 small-12 columns">
             <h3 class="chart-title">Incidents by year</h3>
-            <div id="lockdown-bar-chart"></div>
+            <div id="lockdown-bar-chart-jeffco"></div>
         </div>
         <div class="large-6 medium-6 small-12 columns">
             <h3 class="chart-title">Incidents by school type</h3>
-            <div id="lockdown-pie-chart"></div>
+            <div id="lockdown-pie-chart-jeffco"></div>
             <p class="note">"Other" schools include K-8, K-12, etc.</p>
         </div>
     </div>
@@ -326,7 +326,7 @@
     <script>
     // From https://gis.stackexchange.com/questions/307985/multiple-on-the-fly-filtering-based-on-markers-features-on-leaflet
 
-    let checkboxStates
+    let checkboxstatesjeffco
 
     var cartoTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -341,10 +341,10 @@
         preferCanvas: true
     }).addLayer(cartoTiles);
 
-    const geojsonLayer = L.geoJSON(null, {
+    const geojsonLayerJeffco = L.geoJSON(null, {
         filter: (feature) => {
-            const isIncidentChecked = checkboxStates.incidentType.includes(feature.properties.incidentType)
-            //const isYearChecked = checkboxStates.schoolYear.includes(feature.properties.schoolYear)
+            const isIncidentChecked = checkboxstatesjeffco.incidentType.includes(feature.properties.incidentType)
+            //const isYearChecked = checkboxstatesjeffco.schoolYear.includes(feature.properties.schoolYear)
             return isIncidentChecked // && isYearChecked //only true if all are true
         },
         pointToLayer: function(feature, latlng) {
@@ -373,7 +373,7 @@
 
             var tooltipText = '<h4 class="neighborhood">' + feature.properties.schoolName + '</h4><p class="address">' + feature.properties.schoolAddress + ', ' + feature.properties.schoolCity + '</p><hr><p class="popup-text">' + feature.properties.incidentType + '(s): <strong>' + feature.properties.incidentCount + '</strong></p><p class="note">For 2017-18 and 2018-19 school years</p>';
 
-            console.log(jsonData.length);
+            console.log(jsonDataJeffco.length);
             if (feature.properties.incidentType == 'Lockdown') {
                 return L.circleMarker(latlng, lockdownCircle).bindPopup(tooltipText)
             } else {
@@ -382,8 +382,8 @@
         }
     }).addTo(map);
 
-    function updateCheckboxStates() {
-        checkboxStates = {
+    function updatecheckboxstatesjeffco() {
+        checkboxstatesjeffco = {
             incidentType: [],
             schoolYear: []
         }
@@ -392,10 +392,10 @@
             if (input.checked) {
                 switch (input.className) {
                     case 'incident-type':
-                        checkboxStates.incidentType.push(input.value);
+                        checkboxstatesjeffco.incidentType.push(input.value);
                         break
                         // case 'school-year':
-                        //     checkboxStates.schoolYear.push(input.value);
+                        //     checkboxstatesjeffco.schoolYear.push(input.value);
                         //     break
                 }
             }
@@ -405,19 +405,19 @@
     for (let input of document.querySelectorAll('input')) {
         //Listen to 'change' event of all inputs
         input.onchange = (e) => {
-            geojsonLayer.clearLayers()
-            updateCheckboxStates()
-            geojsonLayer.addData(jsonData)
+            geojsonLayerJeffco.clearLayers()
+            updatecheckboxstatesjeffco()
+            geojsonLayerJeffco.addData(jsonDataJeffco)
         }
     }
 
     /****** INIT ******/
-    updateCheckboxStates()
-    geojsonLayer.addData(jsonData)
+    updatecheckboxstatesjeffco()
+    geojsonLayerJeffco.addData(jsonDataJeffco)
 
     /////*****BAR CHART*****/////
-    var lockdownBarChart = c3.generate({
-        bindto: '#lockdown-bar-chart',
+    var lockdownBarChartJeffco = c3.generate({
+        bindto: '#lockdown-bar-chart-jeffco',
         size: {
             height: 275
         },
@@ -460,8 +460,8 @@
     });
 
     /////*****PIE CHART*****/////
-    var lockdownPieChart = c3.generate({
-        bindto: '#lockdown-pie-chart',
+    var lockdownPieChartJeffco = c3.generate({
+        bindto: '#lockdown-pie-chart-jeffco',
         size: {
             height: 275
         },
